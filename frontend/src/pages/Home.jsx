@@ -1,14 +1,19 @@
-
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Banner from '../components/Banner';
+import Destaques from '../components/Destaques';
+import Footer from '../components/Footer';
 
 function Home() {
   return (
     <div>
-      <h1>Bem-vindo ao Me Adotta 🐾</h1>
-      <p>Conectando animais e pessoas!</p>
+      <Navbar />
+      <Banner />      
+      <Destaques />
+      <Footer /> 
     </div>
   );
 }
 
 export default Home;
-
