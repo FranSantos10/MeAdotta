@@ -33,6 +33,7 @@ const bannerStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  fontFamily: 'Poppins',
 };
 
 const contentStyle = {

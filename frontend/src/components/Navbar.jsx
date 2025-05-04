@@ -26,6 +26,7 @@ const navbarStyle = {
   justifyContent: 'space-between',
   alignItems: 'center',
   color: '#fff',
+  fontFamily: 'Poppins',
 };
 
 const logoContainerStyle = {

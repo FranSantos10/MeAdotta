@@ -15,6 +15,7 @@ const footerStyle = {
   color: '#343A40',
   padding: '2rem',
   textAlign: 'center',
+  fontFamily: 'Poppins',
 };
 
 const textStyle = {

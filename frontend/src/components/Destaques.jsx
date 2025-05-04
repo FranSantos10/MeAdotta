@@ -19,6 +19,7 @@ function Destaques() {
 const destaquesContainerStyle = {
   textAlign: 'center',
   marginTop: '2rem',
+  fontFamily: 'Poppins',
 };
 
 const titleStyle = {
