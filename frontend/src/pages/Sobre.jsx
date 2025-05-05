@@ -1,12 +1,8 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-
 
 function Sobre() {
     return (
         <div>
-            <Navbar /> {/* Navbar no topo */}
             <div style={sobreContainerStyle}>
                 <h2 style={titleStyle}>Sobre o Me Adotta</h2>
                 <p style={contentStyle}>
@@ -19,7 +15,6 @@ function Sobre() {
                     Junte-se a nós e faça a diferença na vida de um animal!
                 </p>
             </div>
-            <Footer /> {/* Footer no final */}
         </div>
 
     );

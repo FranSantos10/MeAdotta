@@ -1,20 +1,17 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Filters from '../components/Filters';
 import AnimalCard from '../components/AnimalCard';
+import '../assets/styles/Adotar.css'; 
 
 function Adotar() {
   return (
-    <div>
-      <Navbar /> 
-      
-      <div style={pageStyle}>
-        <div style={filtersStyle}>
+    <div>    
+      <div className='pageAdotar'>
+        <div className='filtersAdotar'>
           <Filters /> 
         </div>
         
-        <div style={animalsListStyle}>
+        <div className='animals-list'>
           
           <AnimalCard />
           <AnimalCard />
@@ -22,29 +19,8 @@ function Adotar() {
           <AnimalCard />
         </div>
       </div>
-
-      <Footer /> 
     </div>
   );
 }
-
-// Estilos da página
-const pageStyle = {
-  display: 'flex',
-  flexDirection: 'row',  
-  padding: '2rem',
-};
-
-const filtersStyle = {
-  flex: 1,
-  marginRight: '2rem',  
-};
-
- const animalsListStyle = {
-  flex: 3,
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)', 
-  gap: '1.5rem', 
-};
  
 export default Adotar;
