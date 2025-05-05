@@ -10,7 +10,7 @@ function Navbar() {
       <div style={menuStyle}>
         <Link to="/" style={linkStyle}>Home</Link>
         <Link to="/adotar" style={linkStyle}>Adote</Link>
-        <Link to="/cadastro" style={linkStyle}>Cadastro</Link>
+        <Link to="/cadastrar" style={linkStyle}>Cadastro</Link>
         <Link to="/sobre" style={linkStyle}>Sobre</Link>
       </div>
     </div>

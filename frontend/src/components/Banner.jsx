@@ -11,7 +11,7 @@ function Banner() {
             <Link to="/adotar">
               <button style={buttonStyle}>Quero Adotar</button>
             </Link>
-            <Link to="/protetor">
+            <Link to="/cadastrar">
               <button style={buttonStyle}>Sou Protetor</button>
             </Link>
           </div>

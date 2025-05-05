@@ -1,15 +1,24 @@
-// src/components/Destaques.jsx
 import React from 'react';
 
 function Destaques() {
+  // Dados dos animais (exemplo)
+  const animals = [
+    { name: 'Tom', photo: '/animal.jpg' },
+    { name: 'Fred', photo: '/animal.jpg' },
+    { name: 'Luna', photo: '/animal.jpg' },
+    { name: 'Max', photo: '/animal.jpg' },
+  ];
+
   return (
     <div style={destaquesContainerStyle}>
       <h2 style={titleStyle}>Heróis que merecem uma chance</h2>
       <div style={cardContainerStyle}>
-        <div style={cardStyle}>Card Animal 1</div>
-        <div style={cardStyle}>Card Animal 2</div>
-        <div style={cardStyle}>Card Animal 3</div>
-        <div style={cardStyle}>Card Animal 4</div>
+        {animals.map((animal, index) => (
+          <div key={index} style={cardStyle}>
+            <img src={animal.photo} alt={animal.name} style={cardImageStyle} />
+            <h4 style={cardNameStyle}>{animal.name}</h4>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -41,9 +50,25 @@ const cardStyle = {
   backgroundColor: '#f8f9fa',
   borderRadius: '12px',
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   boxShadow: '0px 1px 5px rgba(0, 0, 0, 0.1)',
+  padding: '1rem',
+};
+
+const cardImageStyle = {
+  width: '100%',
+  height: '150px',
+  objectFit: 'cover',
+  borderRadius: '8px',
+};
+
+const cardNameStyle = {
+  fontSize: '1.2rem',
+  fontWeight: 'bold',
+  marginTop: '1rem',
+  color: '#343A40',
 };
 
 export default Destaques;
