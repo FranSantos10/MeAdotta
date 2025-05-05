@@ -12,7 +12,7 @@ function AnimalCard() {
           <span style={tagStyle}>Brincalhão</span>
           <span style={tagStyle}>Médio</span>
         </div>
-        <Link to="/animal/1">
+        <Link to="/adotar/PerfilAnimal">
           <button style={buttonStyle}>Ver Mais</button>
         </Link>
       </div>
