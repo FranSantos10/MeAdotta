@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/adotar" element={<Adotar />} />
-        <Route path="/adotar/PerfilAnimal" element={<PerfilAnimal />} />
+        <Route path="/animais/:id" element={<PerfilAnimal />} />
         <Route path="/adotar/Formulario-Adocao" element={<FormularioInteresse />} />
         <Route path="/cadastrar" element={<CadastroAnimal />} />
         <Route path="/sobre" element={<Sobre />} />

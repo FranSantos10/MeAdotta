@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Alert from '@mui/material/Alert';
-import '../assets/styles/CadastroAnimal.css';  
+import '../assets/styles/CadastroAnimal.css';
 
 function CadastroAnimal() {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -57,6 +57,34 @@ function CadastroAnimal() {
                         <div className="input-group">
                             <label htmlFor="descricao">Descrição / História:</label>
                             <textarea id="descricao" name="descricao" required className="textarea"></textarea>
+                        </div>
+                        {/* Resumo Rápido */}
+                        <div className="input-group">
+                            <label>Se dá bem com crianças?</label>
+                            <div className="radio-group">
+                                <label>
+                                    <input type="radio" name="bomComCriancas" value="true" required />
+                                    Sim
+                                </label>
+                                <label>
+                                    <input type="radio" name="bomComCriancas" value="false" />
+                                    Não
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className="input-group">
+                            <label>Precisa de cuidados especiais?</label>
+                            <div className="radio-group">
+                                <label>
+                                    <input type="radio" name="cuidadosEspeciais" value="true" required />
+                                    Sim
+                                </label>
+                                <label>
+                                    <input type="radio" name="cuidadosEspeciais" value="false" />
+                                    Não
+                                </label>
+                            </div>
                         </div>
 
                         <div className="input-group">

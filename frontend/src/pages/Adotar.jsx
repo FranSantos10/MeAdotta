@@ -12,10 +12,6 @@ function Adotar() {
         </div>
         
         <div className='animals-list'>
-          
-          <AnimalCard />
-          <AnimalCard />
-          <AnimalCard />
           <AnimalCard />
         </div>
       </div>
