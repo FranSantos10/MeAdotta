@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/Formulariointeresse.css'; 
+import Alert from '@mui/material/Alert';
 
 function FormularioInteresse() {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -63,9 +64,10 @@ function FormularioInteresse() {
                         </div>
                     </form>
                 ) : (
-                    <div className='success-messageForm'>
-                        <h3>Obrigado! O protetor entrará em contato em breve.</h3>
+                    <div className='alert'>
+                        <Alert severity="success">Obrigado! O protetor entrará em contato em breve.</Alert>
                     </div>
+                    
                 )}
             </div>
         </div>
