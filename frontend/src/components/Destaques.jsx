@@ -1,4 +1,5 @@
 import React , { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../assets/styles/Destaques.css'; 
 
 const API_URL =  'http://localhost:5000';
@@ -17,11 +18,12 @@ const Destaques = () => {
     <div className="destaques-container-Destaques">
       <h2 className="title-Destaques">Heróis que merecem uma chance</h2>
       <div className="card-container-Destaques">
-        {animais.map((animal, index) => (
-          <div key={index} className="card-Destaques">
-            <img src={`${API_URL}${animal.foto}`} alt={animal.nome} className="card-image-Destaques" />
-            <h4 className="card-name-Destaques">{animal.nome}</h4>
-          </div>
+        {animais.slice(0, 4).map((animal, index) => (
+          <Link to={`/animais/${animal.id}`} key={index} className="card-Destaques">
+          <img src={`${API_URL}${animal.foto}`} alt={animal.nome} className="card-image-Destaques" />
+          <h4 className="card-name-Destaques">{animal.nome}</h4>
+        </Link>
+        
         ))}
       </div>
     </div>

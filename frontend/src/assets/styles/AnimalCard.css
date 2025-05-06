@@ -3,8 +3,7 @@
   display: grid; /* Usando grid para os cards */
   grid-template-columns: repeat(3, 1fr); /* Três colunas */
   gap: 1.5rem; /* Espaçamento entre os cards */
-  padding: 1rem;
-  width: 100%;
+  margin-right: 10%;
 }
 
 /* .card-Animal */

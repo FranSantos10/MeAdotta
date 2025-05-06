@@ -12,6 +12,7 @@ function Footer() {
 // 🖼️ Estilos do Footer
 const footerStyle = {
   backgroundColor: '#F4FAFF',
+  width: '100%',
   color: '#343A40',
   padding: '2rem',
   textAlign: 'center',

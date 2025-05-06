@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <Router>
+      <div style={{ overflowX: 'hidden', width: '100%' }}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -24,6 +25,7 @@ function App() {
         {/* rotas futuras */}
       </Routes>
       <Footer />
+      </div>
     </Router>
   );
 }

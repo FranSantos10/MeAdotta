@@ -4,7 +4,7 @@ import Filters from '../components/Filters';
 import '../assets/styles/PerfilAnimal.css';
 
 
-const API_URL =  'http://localhost:5000';
+const API_URL = 'http://localhost:5000';
 
 function PerfilAnimal() {
     const { id } = useParams(); // id do animal
@@ -23,11 +23,9 @@ function PerfilAnimal() {
     return (
         <div>
             <div className='pagePerfil'>
-                <div className='filtersPerfil'>
-                    <Filters />
-                </div>
 
                 <div className='profile'>
+                    <h2 className="titlePerfil">Perfil do Animal</h2>
                     {/* Foto Grande */}
                     <img src={`${API_URL}${animal.foto}`} alt="Animal" className='imagePerfil' />
 

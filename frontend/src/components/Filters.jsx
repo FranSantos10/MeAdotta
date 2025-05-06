@@ -1,66 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
+import '../assets/styles/Filters.css';
+import { PERSONALIDADE_OPCOES } from '../opcoes';
 
-function Filters() {
+function Filters({ onFilterChange }) {
+    const [filtrosSelecionados, setfiltrosSelecionados] = useState({
+        porte: [],
+        personalidade: [],
+        localizacao: '',
+    });
+
+    const handleCheckboxChange = (categoria, valor) => {
+        setfiltrosSelecionados((prevFiltros) => {
+            const atualizaCategoria = prevFiltros[categoria].includes(valor)
+                ? prevFiltros[categoria].filter((item) => item !== valor)
+                : [...prevFiltros[categoria], valor];
+
+            const novosFiltros = { ...prevFiltros, [categoria]: atualizaCategoria };
+            onFilterChange(novosFiltros);
+            return novosFiltros;
+        });
+    };
+
+    const handleLocationChange = (e) => {
+        const location = e.target.value;
+        setfiltrosSelecionados((prevFiltros) => {
+            const novosFiltros = { ...prevFiltros, localizacao: location };
+            onFilterChange(novosFiltros);
+            return novosFiltros;
+        });
+    };
+
     return (
-        <div style={filtersContainerStyle}>
+        <div className="filters-container">
             <h3>Filtros</h3>
 
-            <div style={filterGroupStyle}>
+            <div className="filter-group">
                 <label>Porte:</label>
-                <div style={checkboxGroupStyle}>
-                    <label>
-                        <input type="checkbox" value="pequeno" /> Pequeno
-                    </label>
-                    <label>
-                        <input type="checkbox" value="medio" /> Médio
-                    </label>
-                    <label>
-                        <input type="checkbox" value="grande" /> Grande
-                    </label>
+                <div className="checkbox-group">
+                    {['pequeno', 'medio', 'grande'].map((tamanho) => (
+                        <label key={tamanho}>
+                            <input
+                                type="checkbox"
+                                value={tamanho}
+                                checked={filtrosSelecionados.porte.includes(tamanho)}
+                                onChange={() => handleCheckboxChange('porte', tamanho)}
+                            /> {tamanho.charAt(0).toUpperCase() + tamanho.slice(1)}
+                        </label>
+                    ))}
                 </div>
             </div>
 
-            <div style={filterGroupStyle}>
+            <div className="filter-group">
                 <label>Personalidade:</label>
-                <div style={checkboxGroupStyle}>
-                    <label>
-                        <input type="checkbox" value="calmo" /> Calmo
-                    </label>
-                    <label>
-                        <input type="checkbox" value="brincalhao" /> Brincalhão
-                    </label>
-                    <label>
-                        <input type="checkbox" value="protetor" /> Protetor
-                    </label>
+                <div className="checkbox-group">
+                    {PERSONALIDADE_OPCOES.map((personalidade) => (
+                        <label key={personalidade}>
+                            <input
+                                type="checkbox"
+                                value={personalidade}
+                                checked={filtrosSelecionados.personalidade.includes(personalidade)}
+                                onChange={() => handleCheckboxChange('personalidade', personalidade)}
+                            /> {personalidade.charAt(0).toUpperCase() + personalidade.slice(1)}
+                        </label>
+                    ))}
                 </div>
-
-
             </div>
 
-            <div style={filterGroupStyle}>
-                <label>Localização: </label>
-                <input type="text" placeholder="Cidade ou Estado" />
+            <div className="filter-group">
+                <label>Localização:</label>
+                <input
+                    type="text"
+                    placeholder="Cidade ou Estado"
+                    value={filtrosSelecionados.localizacao}
+                    onChange={handleLocationChange}
+                />
             </div>
         </div>
     );
 }
-
-// Estilos do componente Filters
-const filtersContainerStyle = {
-    padding: '1.5rem',
-    backgroundColor: '#f9f9f9',
-    borderRadius: '8px',
-    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
-};
-
-const checkboxGroupStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
-};
-
-const filterGroupStyle = {
-    marginBottom: '1rem',
-};
 
 export default Filters;

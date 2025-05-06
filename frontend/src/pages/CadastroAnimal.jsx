@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import '../assets/styles/CadastroAnimal.css';
 import axios from 'axios';
+import { PERSONALIDADE_OPCOES } from '../opcoes';
+
 
 const API_URL =  'http://localhost:5000';
 
@@ -120,7 +122,7 @@ function CadastroAnimal() {
                         <div className="input-group">
                             <label>Personalidade:</label>
                             <div className="checkbox-group">
-                                {['brincalhão', 'calmo', 'timido'].map((personalidade) => (
+                                {PERSONALIDADE_OPCOES.map((personalidade) => (
                                     <label key={personalidade}>
                                         <input
                                             type="checkbox"
