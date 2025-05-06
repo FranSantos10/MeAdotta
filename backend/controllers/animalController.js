@@ -7,7 +7,7 @@ let animais = [
     porte: "medio", 
     personalidade: ["calmo", "brincalhão"], 
     descricao: "Luna é muito carinhosa e adora brincar.", 
-    foto: "/animal.jpg" 
+    foto: "/uploads/animal.jpg" 
   },
   { 
     id: 2, 
@@ -16,7 +16,7 @@ let animais = [
     porte: "grande", 
     personalidade: ["calmo", "tímido"], 
     descricao: "Thor é calmo e adora um bom descanso.", 
-    foto: "/animal.jpg" 
+    foto: "/uploads/animal.jpg" 
   },
   { 
     id: 3, 
@@ -25,7 +25,7 @@ let animais = [
     porte: "pequeno", 
     personalidade: ["brincalhão"], 
     descricao: "Ted é um cachorro muito brincalhão e energético.", 
-    foto: "/animal.jpg" 
+    foto: "/uploads/animal.jpg" 
   }
 ];
 
@@ -46,15 +46,37 @@ const filtrarAnimal = (req, res) => {
 
 
 const cadastrarAnimal = (req, res) => {
-  const novoAnimal = req.body;
+  const {
+    nome,
+    idade,
+    porte,
+    personalidade,
+    descricao,
+    bomComCriancas,
+    cuidadosEspeciais
+  } = req.body;
 
-  // Criar um ID simples e adicionar ao array
+  const foto = req.file ? `/uploads/${req.file.filename}` : null;
+
   const novoId = animais.length > 0 ? animais[animais.length - 1].id + 1 : 1;
-  const animalComId = { id: novoId, ...novoAnimal };
-  animais.push(animalComId);
 
-  console.log("Animal cadastrado:", animalComId);
-  res.status(201).json({ mensagem: "Animal cadastrado com sucesso!", animal: animalComId });
+  const animal = {
+    id: novoId,
+    nome,
+    idade: parseInt(idade),
+    porte,
+    personalidade: Array.isArray(personalidade) ? personalidade : [personalidade],
+    descricao,
+    bomComCriancas: bomComCriancas === 'true',
+    cuidadosEspeciais: cuidadosEspeciais === 'true',
+    foto
+  };
+
+  animais.push(animal);
+
+  console.log("Animal cadastrado:", animal);
+  res.status(201).json({ mensagem: "Animal cadastrado com sucesso!", animal });
 };
+
 
 module.exports = { listarAnimais, filtrarAnimal, cadastrarAnimal };

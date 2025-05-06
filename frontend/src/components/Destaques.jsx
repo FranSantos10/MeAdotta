@@ -1,11 +1,13 @@
 import React , { useEffect, useState } from 'react';
 import '../assets/styles/Destaques.css'; 
 
+const API_URL =  'http://localhost:5000';
+
 const Destaques = () => {
   const [animais, setAnimais] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/animais')
+    fetch(`${API_URL}/api/animais`)
       .then(response => response.json())
       .then(data => setAnimais(data))
       .catch(error => console.error('Erro ao buscar destaques:', error));
@@ -17,7 +19,7 @@ const Destaques = () => {
       <div className="card-container-Destaques">
         {animais.map((animal, index) => (
           <div key={index} className="card-Destaques">
-            <img src={animal.foto} alt={animal.nome} className="card-image-Destaques" />
+            <img src={`${API_URL}${animal.foto}`} alt={animal.nome} className="card-image-Destaques" />
             <h4 className="card-name-Destaques">{animal.nome}</h4>
           </div>
         ))}

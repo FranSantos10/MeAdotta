@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/styles/AnimalCard.css'; 
 
+
+const API_URL =  'http://localhost:5000';
+
 function AnimalCard() {
   const [animais, setAnimais] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/animais')
+    fetch(`${API_URL}/api/animais`)
       .then(response => response.json())
       .then(data => setAnimais(data))
       .catch(error => console.error('Erro ao buscar animais:', error));
@@ -16,7 +19,7 @@ function AnimalCard() {
     <div className='cards-container-Animal'>
     {animais.map((animal) => (
       <div key={animal.id} className='card-Animal'>
-        <img src={animal.foto} alt={animal.nome} className='card-image-Animal' />
+        <img src={`${API_URL}${animal.foto}`} alt={animal.nome} className='card-image-Animal' />
         <div className='card-info-Animal'>
           <h4>{animal.nome}</h4>
           <p>Idade: {animal.idade} {animal.idade === 1 ? 'ano' : 'anos'}</p>

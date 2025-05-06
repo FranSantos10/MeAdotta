@@ -3,12 +3,15 @@ import { Link, useParams } from 'react-router-dom';
 import Filters from '../components/Filters';
 import '../assets/styles/PerfilAnimal.css';
 
+
+const API_URL =  'http://localhost:5000';
+
 function PerfilAnimal() {
     const { id } = useParams(); // id do animal
     const [animal, setAnimal] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/animais/${id}`)
+        fetch(`${API_URL}/api/animais/${id}`)
             .then(response => response.json())
             .then(data => setAnimal(data))
             .catch(error => console.error('Erro ao buscar animal:', error));
@@ -26,7 +29,7 @@ function PerfilAnimal() {
 
                 <div className='profile'>
                     {/* Foto Grande */}
-                    <img src="/animal.jpg" alt="Animal" className='image' />
+                    <img src={`${API_URL}${animal.foto}`} alt="Animal" className='imagePerfil' />
 
                     {/* Informações do Animal */}
                     <div className='info-container'>
@@ -66,7 +69,7 @@ function PerfilAnimal() {
                     </div>
 
                     {/* Botões de Interesse */}
-                    <Link to="/adotar/Formulario-Adocao" className='button-link'>
+                    <Link to="/interesse" className='button-link'>
                         <button className='button'>Tenho Interesse</button>
                     </Link>
 
