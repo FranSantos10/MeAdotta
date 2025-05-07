@@ -68,7 +68,7 @@ function Filters({ onFilterChange }) {
 
           {/*   <div className="filter-group">
                 <label>Localização:</label>
-                <input
+                <input classesName="localizacao-group"
                     type="text"
                     placeholder="Cidade ou Estado"
                     value={filtrosSelecionados.localizacao}

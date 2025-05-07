@@ -1,14 +1,18 @@
-
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Páginas
 import Home from './pages/Home';
 import Adotar from './pages/Adotar';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import PerfilAnimal from './pages/PerfilAnimal';
 import FormularioInteresse from './pages/FormularioInteresse';
 import CadastroAnimal from './pages/CadastroAnimal';
-import Sobre from './pages/Sobre';  
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sobre from './pages/Sobre';
+//import Login from './pages/Login';
+
+// Componentes
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -22,6 +26,8 @@ function App() {
         <Route path="/interesse/:id" element={<FormularioInteresse />} />
         <Route path="/cadastrar" element={<CadastroAnimal />} />
         <Route path="/sobre" element={<Sobre />} />
+  
+
         {/* rotas futuras */}
       </Routes>
       <Footer />

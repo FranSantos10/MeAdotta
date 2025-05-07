@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const animalRoutes = require('./routes/animalRoutes');
 const interesseRoutes = require('./routes/interesseRoutes'); 
+const loginRoutes = require('./routes/loginRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/animais', animalRoutes);
 app.use('/api/interesse', interesseRoutes);
 app.use('/uploads', express.static('uploads'));
+app.use('/api/login', loginRoutes);
 
 
 app.listen(PORT, () => {

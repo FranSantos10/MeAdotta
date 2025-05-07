@@ -15,7 +15,7 @@
     gap: 0.5rem;
   }
   
-  input[type="text"] {
+  .localizacao-group {
     display: block;
     width: 100%;
     margin-top: 0.5rem;

@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import '../assets/styles/CadastroAnimal.css';
 import axios from 'axios';
 import { PERSONALIDADE_OPCOES } from '../opcoes';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function CadastroAnimal() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('tokenProtetor');
+        if (!token) {
+          navigate('/login');
+        }
+      }, []);
     
+      
     const [formData, setFormData] = useState({
         nome: '',
         idade: '',
@@ -80,27 +90,26 @@ function CadastroAnimal() {
                     <form onSubmit={handleSubmit} className="form">
                         <div className="input-group">
                             <label htmlFor="nome">Nome do Animal:</label>
-                            <input
+                            <input className='input'
                                 type="text"
                                 id="nome"
                                 name="nome"
                                 value={formData.nome}
                                 onChange={handleChange}
                                 required
-                                className="input"
                             />
                         </div>
 
                         <div className="input-group">
                             <label htmlFor="idade">Idade:</label>
-                            <input
+                            <input className='input'
                                 type="number"
                                 id="idade"
                                 name="idade"
                                 value={formData.idade}
                                 onChange={handleChange}
                                 required
-                                className="input"
+
                             />
                         </div>
 
@@ -154,7 +163,7 @@ function CadastroAnimal() {
                             <label>Se dá bem com crianças?</label>
                             <div className="radio-group">
                                 <label>
-                                    <input
+                                    <input 
                                         type="radio"
                                         name="bomComCriancas"
                                         value="true"
@@ -165,7 +174,7 @@ function CadastroAnimal() {
                                     Sim
                                 </label>
                                 <label>
-                                    <input
+                                    <input 
                                         type="radio"
                                         name="bomComCriancas"
                                         value="false"
@@ -181,7 +190,7 @@ function CadastroAnimal() {
                             <label>Precisa de cuidados especiais?</label>
                             <div className="radio-group">
                                 <label>
-                                    <input
+                                    <input 
                                         type="radio"
                                         name="cuidadosEspeciais"
                                         value="true"
@@ -192,7 +201,7 @@ function CadastroAnimal() {
                                     Sim
                                 </label>
                                 <label>
-                                    <input
+                                    <input 
                                         type="radio"
                                         name="cuidadosEspeciais"
                                         value="false"
@@ -206,26 +215,26 @@ function CadastroAnimal() {
 
                         <div className="input-group">
                             <label htmlFor="emailProtetor">E-mail do Protetor:</label>
-                            <input
+                            <input className='input'
                                 type="email"
                                 id="emailProtetor"
                                 name="emailProtetor"
                                 value={formData.emailProtetor}
                                 onChange={handleChange}
                                 required
-                                className="input"
+
                             />
                         </div>
 
                         <div className="input-group">
                             <label htmlFor="foto">Upload de Foto:</label>
-                            <input
+                            <input className='input'
                                 type="file"
                                 id="foto"
                                 name="foto"
                                 onChange={handleChange}
                                 required
-                                className="input"
+
                             />
                         </div>
 
