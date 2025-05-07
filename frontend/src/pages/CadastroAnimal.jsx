@@ -4,10 +4,10 @@ import '../assets/styles/CadastroAnimal.css';
 import axios from 'axios';
 import { PERSONALIDADE_OPCOES } from '../opcoes';
 
-
-const API_URL = 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 function CadastroAnimal() {
+    
     const [formData, setFormData] = useState({
         nome: '',
         idade: '',
