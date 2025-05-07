@@ -21,14 +21,14 @@ function Filters({ onFilterChange }) {
         });
     };
 
-    const handleLocationChange = (e) => {
+ /*    const handleLocationChange = (e) => {
         const location = e.target.value;
         setfiltrosSelecionados((prevFiltros) => {
             const novosFiltros = { ...prevFiltros, localizacao: location };
             onFilterChange(novosFiltros);
             return novosFiltros;
         });
-    };
+    }; */
 
     return (
         <div className="filters-container">
@@ -66,7 +66,7 @@ function Filters({ onFilterChange }) {
                 </div>
             </div>
 
-            <div className="filter-group">
+          {/*   <div className="filter-group">
                 <label>Localização:</label>
                 <input
                     type="text"
@@ -74,7 +74,7 @@ function Filters({ onFilterChange }) {
                     value={filtrosSelecionados.localizacao}
                     onChange={handleLocationChange}
                 />
-            </div>
+            </div> */}
         </div>
     );
 }

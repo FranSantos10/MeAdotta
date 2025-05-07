@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import '../assets/styles/Formulariointeresse.css';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const API_URL =  'http://localhost:5000';
 
 
 function FormularioInteresse() {
+    const { id: animalId } = useParams();
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -37,8 +40,11 @@ function FormularioInteresse() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const dadosComId = { ...formData, animalId };
+
         try {
-            const response = await axios.post(`${API_URL}/api/interesse`, formData);
+            const response = await axios.post(`${API_URL}/api/interesse`, dadosComId);
             console.log(response.data);
             setFormSubmitted(true);
             setError('');

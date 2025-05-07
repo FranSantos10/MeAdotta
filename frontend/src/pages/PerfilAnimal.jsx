@@ -59,15 +59,15 @@ function PerfilAnimal() {
                     {/* Resumo Rápido */}
                     <div className='summary'>
                         <div className='summary-item'>
-                            <span>Se dá bem com crianças?</span> {animal.bomComCriancas ? '✔️' : '❌'}
+                            <span>Se dá bem com crianças?</span> {animal.bomComCriancas ? '✅' : '❌'}
                         </div>
                         <div className='summary-item'>
-                            <span>Precisa de cuidados especiais?</span> {animal.cuidadosEspeciais ? '✔️' : '❌'}
+                            <span>Precisa de cuidados especiais?</span> {animal.cuidadosEspeciais ? '✅' : '❌'}
                         </div>
                     </div>
 
                     {/* Botões de Interesse */}
-                    <Link to="/interesse" className='button-link'>
+                    <Link to={`/interesse/${animal.id}`} className='button-link'>
                         <button className='button'>Tenho Interesse</button>
                     </Link>
 

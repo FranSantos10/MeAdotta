@@ -5,7 +5,7 @@ import axios from 'axios';
 import { PERSONALIDADE_OPCOES } from '../opcoes';
 
 
-const API_URL =  'http://localhost:5000';
+const API_URL = 'http://localhost:5000';
 
 function CadastroAnimal() {
     const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ function CadastroAnimal() {
         bomComCriancas: '',
         cuidadosEspeciais: '',
         foto: null,
+        emailProtetor: '',
     });
 
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -201,6 +202,19 @@ function CadastroAnimal() {
                                     Não
                                 </label>
                             </div>
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="emailProtetor">E-mail do Protetor:</label>
+                            <input
+                                type="email"
+                                id="emailProtetor"
+                                name="emailProtetor"
+                                value={formData.emailProtetor}
+                                onChange={handleChange}
+                                required
+                                className="input"
+                            />
                         </div>
 
                         <div className="input-group">

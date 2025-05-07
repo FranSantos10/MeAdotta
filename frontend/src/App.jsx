@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/adotar" element={<Adotar />} />
         <Route path="/animais/:id" element={<PerfilAnimal />} />
-        <Route path="/interesse" element={<FormularioInteresse />} />
+        <Route path="/interesse/:id" element={<FormularioInteresse />} />
         <Route path="/cadastrar" element={<CadastroAnimal />} />
         <Route path="/sobre" element={<Sobre />} />
         {/* rotas futuras */}
