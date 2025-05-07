@@ -7,6 +7,7 @@ let animais = [
     porte: "medio", 
     personalidade: ["calmo", "brincalhão"], 
     descricao: "Luna é muito carinhosa e adora brincar.", 
+    emailProtetor: "franci.santos.silva10@gmail.com",
     foto: "/uploads/animal.jpg" 
   },
   { 
@@ -16,6 +17,7 @@ let animais = [
     porte: "grande", 
     personalidade: ["calmo", "tímido"], 
     descricao: "Thor é calmo e adora um bom descanso.", 
+    emailProtetor: "franci.santos.silva10@gmail.com",
     foto: "/uploads/animal.jpg" 
   },
   { 
@@ -25,6 +27,7 @@ let animais = [
     porte: "pequeno", 
     personalidade: ["brincalhão"], 
     descricao: "Ted é um cachorro muito brincalhão e energético.", 
+    emailProtetor: "franci.santos.silva10@gmail.com",
     foto: "/uploads/animal.jpg" 
   }
 ];
@@ -53,7 +56,8 @@ const cadastrarAnimal = (req, res) => {
     personalidade,
     descricao,
     bomComCriancas,
-    cuidadosEspeciais
+    cuidadosEspeciais,
+    emailProtetor 
   } = req.body;
 
   const foto = req.file ? `/uploads/${req.file.filename}` : null;
@@ -69,8 +73,11 @@ const cadastrarAnimal = (req, res) => {
     descricao,
     bomComCriancas: bomComCriancas === 'true',
     cuidadosEspeciais: cuidadosEspeciais === 'true',
+    emailProtetor ,
     foto
   };
+
+  const protetorEmail = animal.emailProtetor;
 
   animais.push(animal);
 
@@ -79,4 +86,4 @@ const cadastrarAnimal = (req, res) => {
 };
 
 
-module.exports = { listarAnimais, filtrarAnimal, cadastrarAnimal };
+module.exports = { listarAnimais, filtrarAnimal, cadastrarAnimal, animais  };
