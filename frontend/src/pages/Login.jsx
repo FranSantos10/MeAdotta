@@ -19,7 +19,9 @@ const Login = () => {
         try {
             const res = await axios.post(`${API_URL}/api/login`, formData);
             localStorage.setItem('tokenProtetor', res.data.token); // salvar token
+            localStorage.setItem('protetorEmail', res.data.email);
             navigate('/cadastrar');
+            window.location.reload();
         } catch (err) {
             const errorMessage = err.response?.data?.message || 'Login inválido';
             setError(errorMessage);

@@ -13,6 +13,7 @@ import Login from './pages/Login';
 // Componentes
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import EditarAnimal from './components/EditarAnimal';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Route path="/cadastrar" element={<CadastroAnimal />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/editar/:id" element={<EditarAnimal />} /> 
 
           {/* rotas futuras */}
         </Routes>

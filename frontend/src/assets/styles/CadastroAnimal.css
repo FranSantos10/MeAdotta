@@ -95,3 +95,10 @@
     border-radius: 12px;
     cursor: pointer;
 }
+.image-preview-small {
+    width: 100px;  /* Largura pequena */
+    height: 100px; /* Altura pequena */
+    object-fit: cover; /* Faz a imagem se ajustar ao tamanho sem distorcer */
+    border-radius: 10%; /* Opcional: faz a imagem ficar redonda */
+  }
+  

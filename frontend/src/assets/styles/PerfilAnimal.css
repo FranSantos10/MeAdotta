@@ -21,14 +21,15 @@
     margin: 0 auto;
     text-align: center;
     flex: 2;
+    max-width: 700px;
 }
 
 /* .image */
 .imagePerfil {
-    width: 50%;
+    width: 70%;
     height: auto;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 /* .info-container */
@@ -103,6 +104,7 @@
     background-color: #FFFFFF;
     outline: none;
     font-family: 'Open Sans', sans-serif;
+    margin-top: 10px;
 }
 
 /* .summary */
@@ -141,3 +143,15 @@
     color: #74C0FC;
     font-size: 1rem;
 }
+
+.button-link-acao{
+    padding: 0.5rem 2rem;
+    font-size: 1.0rem;
+    background-color: #CED4DA;
+    color: #343a40;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+

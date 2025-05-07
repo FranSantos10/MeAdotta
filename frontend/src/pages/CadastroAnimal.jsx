@@ -12,6 +12,7 @@ function CadastroAnimal() {
 
     useEffect(() => {
         const token = localStorage.getItem('tokenProtetor');
+        
         if (!token) {
           navigate('/login');
         }

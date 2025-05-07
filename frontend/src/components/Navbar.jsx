@@ -1,7 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const navigate = useNavigate();
+  const [logado, setLogado] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('tokenProtetor');
+    setLogado(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('tokenProtetor');
+    localStorage.removeItem('protetorEmail');
+    navigate('/');
+    window.location.reload();
+  };
+
   return (
     <div style={navbarStyle}>
       <div style={logoContainerStyle}>
@@ -12,6 +27,11 @@ function Navbar() {
         <Link to="/adotar" style={linkStyle}>Adote</Link>
         <Link to="/cadastrar" style={linkStyle}>Cadastro</Link>
         <Link to="/sobre" style={linkStyle}>Sobre</Link>
+        {logado && (
+          <button onClick={handleLogout} style={logoutButtonStyle}>
+            Sair
+          </button>
+        )}
       </div>
     </div>
   );
@@ -43,6 +63,7 @@ const logoImageStyle = {
 const menuStyle = {
   display: 'flex',
   gap: '2rem',
+  alignItems: 'baseline',
 };
 
 const linkStyle = {
@@ -50,6 +71,16 @@ const linkStyle = {
   textDecoration: 'none',
   fontSize: '1rem',
   fontWeight: '500',
+};
+
+const logoutButtonStyle = {
+  backgroundColor: '#d16666',
+  color: '#fff',
+  border: 'none',
+  padding: '0.5rem 1rem',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  fontSize: '1rem',
 };
 
 export default Navbar;

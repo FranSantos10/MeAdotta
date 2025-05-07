@@ -2,7 +2,7 @@ const multer = require('multer');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { listarAnimais, filtrarAnimal, cadastrarAnimal } = require('../controllers/animalController');
+const { listarAnimais, filtrarAnimal, cadastrarAnimal, editarAnimal, deletarAnimal } = require('../controllers/animalController');
 
 // Configuração do armazenamento
 const storage = multer.diskStorage({
@@ -19,6 +19,8 @@ const upload = multer({ storage: storage });
 // Rotas
 router.get('/', listarAnimais);
 router.get('/:id', filtrarAnimal);
+router.put('/:id', upload.single('foto'), editarAnimal); 
+router.delete('/:id', deletarAnimal);
 router.post('/', upload.single('foto'), cadastrarAnimal);
 
 module.exports = router;
