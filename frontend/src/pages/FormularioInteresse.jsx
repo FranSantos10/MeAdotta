@@ -113,8 +113,8 @@ function FormularioInteresse() {
                                     <input
                                         type="radio"
                                         name="outrosAnimais"
-                                        value="Sim"
-                                        checked={formData.outrosAnimais === 'Sim'}
+                                        value="true"
+                                        checked={formData.outrosAnimais === 'true'}
                                         onChange={handleChange}
                                     />
                                     Sim
@@ -123,8 +123,8 @@ function FormularioInteresse() {
                                     <input
                                         type="radio"
                                         name="outrosAnimais"
-                                        value="Nao"
-                                        checked={formData.outrosAnimais === 'Nao'}
+                                        value="false"
+                                        checked={formData.outrosAnimais === 'false'}
                                         onChange={handleChange}
                                     />
                                     Não

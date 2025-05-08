@@ -38,10 +38,10 @@ function EditarAnimal() {
           porte: animal.porte,
           personalidade: animal.personalidade || [],  // Certificando-se de que é um array
           descricao: animal.descricao,
-          bomComCriancas: animal.bomComCriancas ? 'true' : 'false',  // Garantir que é 'true' ou 'false'
-          cuidadosEspeciais: animal.cuidadosEspeciais ? 'true' : 'false', // Garantir que é 'true' ou 'false'
+          bomComCriancas: animal.bomcomcriancas ? 'true' : 'false',  // Garantir que é 'true' ou 'false'
+          cuidadosEspeciais: animal.cuidadosespeciais ? 'true' : 'false', // Garantir que é 'true' ou 'false'
           foto: animal.foto,  // A foto vai ser exibida como URL, mas não será enviada automaticamente
-          emailProtetor: animal.emailProtetor,
+          emailProtetor: animal.emailprotetor,
         });
       })
       .catch(error => {

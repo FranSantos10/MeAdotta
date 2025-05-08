@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: meadotta_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 4dot4arP3t
+      POSTGRES_DB: meadotta
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./backend  # Diretório do seu backend
+    environment:
+      DB_HOST: postgres  # Nome do serviço do banco de dados
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 4dot4arP3t
+      DB_NAME: meadotta
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    command: ["npm", "run", "dev"]
+
+  frontend:
+    build: ./frontend  # Diretório do seu frontend
+    environment:
+      VITE_API_URL: "http://localhost:5000"  # URL da API do backend (nome do serviço no Docker Compose)
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"  # Expondo a porta 5173 do frontend
+    command: ["npm", "run", "dev"]
+
+volumes:
+  postgres_data:

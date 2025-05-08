@@ -1,54 +1,38 @@
-// Simulando um "banco" em memória
-let animais = [
-  {
-    id: 1,
-    nome: "Luna",
-    idade: 3,
-    porte: "medio",
-    personalidade: ["calmo", "brincalhão"],
-    descricao: "Luna é muito carinhosa e adora brincar.",
-    emailProtetor: "franci.santos.silva10@gmail.com",
-    foto: "/uploads/animal.jpg"
-  },
-  {
-    id: 2,
-    nome: "Thor",
-    idade: 5,
-    porte: "grande",
-    personalidade: ["calmo", "tímido"],
-    descricao: "Thor é calmo e adora um bom descanso.",
-    emailProtetor: "franci.santos.silva10@gmail.com",
-    foto: "/uploads/animal.jpg"
-  },
-  {
-    id: 3,
-    nome: "Ted",
-    idade: 5,
-    porte: "pequeno",
-    personalidade: ["brincalhão"],
-    descricao: "Ted é um cachorro muito brincalhão e energético.",
-    emailProtetor: "franci.santos.silva10@gmail.com",
-    foto: "/uploads/animal.jpg"
-  }
-];
+const pool = require('../db');
 
-const listarAnimais = (req, res) => {
-  res.json(animais);
+// Listar todos os animais
+const listarAnimais = async (req, res) => {
+  try {
+    const resultado = await pool.query('SELECT * FROM animais ORDER BY id DESC');
+    res.status(200).json(resultado.rows);  // Retorna todos os animais do banco de dados
+  } catch (error) {
+    console.error('Erro ao listar animais:', error);
+    res.status(500).json({ erro: 'Erro ao listar animais' });
+  }
 };
 
-const filtrarAnimal = (req, res) => {
+// Filtrar um animal pelo ID
+const filtrarAnimal = async (req, res) => {
   const id = parseInt(req.params.id);
-  const animal = animais.find(a => a.id === id);
+  try {
+    const resultado = await pool.query('SELECT * FROM animais WHERE id = $1', [id]);
 
-  if (animal) {
-    res.json(animal);
-  } else {
-    res.status(404).json({ erro: "Animal não encontrado" });
+    if (resultado.rows.length === 0) {
+      console.log(`Nenhum animal encontrado com o ID: ${id}`);  // Log para verificar se o animal não existe
+      return res.status(404).json({ erro: 'Animal não encontrado' });
+    }
+
+    console.log('Animal encontrado:', resultado.rows[0]);  // Log do animal encontrado
+    res.status(200).json(resultado.rows[0]);  // Retorna o animal encontrado
+  } catch (error) {
+    console.error('Erro ao buscar animal:', error);
+    res.status(500).json({ erro: 'Erro ao buscar animal' });
   }
 };
 
 
-const cadastrarAnimal = (req, res) => {
+// Cadastrar um novo animal
+const cadastrarAnimal = async (req, res) => {
   const {
     nome,
     idade,
@@ -62,83 +46,75 @@ const cadastrarAnimal = (req, res) => {
 
   const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-  const novoId = animais.length > 0 ? animais[animais.length - 1].id + 1 : 1;
+  try {
+    const resultado = await pool.query(
+      'INSERT INTO animais (nome, idade, porte, personalidade, descricao, bomComCriancas, cuidadosEspeciais, emailProtetor, foto) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      [nome, idade, porte, personalidade, descricao, bomComCriancas, cuidadosEspeciais, emailProtetor, foto]
+    );
 
-  const animal = {
-    id: novoId,
-    nome,
-    idade: parseInt(idade),
-    porte,
-    personalidade: Array.isArray(personalidade) ? personalidade : [personalidade],
-    descricao,
-    bomComCriancas: bomComCriancas === 'true',
-    cuidadosEspeciais: cuidadosEspeciais === 'true',
-    emailProtetor,
-    foto
-  };
-
-  animais.push(animal);
-
-  console.log("Animal cadastrado:", animal);
-  res.status(201).json({ mensagem: "Animal cadastrado com sucesso!", animal });
+    const novoAnimal = resultado.rows[0];
+    console.log("Animal cadastrado:", novoAnimal);
+    res.status(201).json({ mensagem: "Animal cadastrado com sucesso!", animal: novoAnimal });
+  } catch (error) {
+    console.error('Erro ao cadastrar animal:', error);
+    res.status(500).json({ erro: 'Erro ao cadastrar animal' });
+  }
 };
 
-const deletarAnimal = (req, res) => {
+// Deletar um animal
+const deletarAnimal = async (req, res) => {
   const id = parseInt(req.params.id);
-  const index = animais.findIndex(a => a.id === id);
+  try {
+    const resultado = await pool.query('DELETE FROM animais WHERE id = $1 RETURNING *', [id]);
 
-  if (index !== -1) {
-    animais.splice(index, 1);
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: 'Animal não encontrado' });
+    }
+
     res.status(200).json({ mensagem: "Animal deletado com sucesso!" });
-  } else {
-    res.status(404).json({ erro: "Animal não encontrado" });
+  } catch (error) {
+    console.error('Erro ao deletar animal:', error);
+    res.status(500).json({ erro: 'Erro ao deletar animal' });
   }
 };
 
-const editarAnimal = (req, res) => {
+// Editar um animal
+const editarAnimal = async (req, res) => {
   const id = parseInt(req.params.id);
-  const index = animais.findIndex(a => a.id === id);
+  const {
+    nome,
+    idade,
+    porte,
+    personalidade,
+    descricao,
+    bomComCriancas,
+    cuidadosEspeciais,
+    emailProtetor
+  } = req.body;
 
-  if (index !== -1) {
-    const {
-      nome,
-      idade,
-      porte,
-      personalidade,
-      descricao,
-      bomComCriancas,
-      cuidadosEspeciais,
-      emailProtetor
-    } = req.body;
+  const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-      // Verificar se algum campo obrigatório está ausente
-  if (!nome || !idade || !porte || !personalidade || !descricao || bomComCriancas === undefined || cuidadosEspeciais === undefined || !emailProtetor) {
-    return res.status(400).json({ error: 'Faltam dados obrigatórios.' });
+  const personalidadeArray = Array.isArray(personalidade) ? personalidade : [personalidade];
+
+  const bomComCriancasBoolean = (bomComCriancas === 'true' || bomComCriancas === true);
+  const cuidadosEspeciaisBoolean = (cuidadosEspeciais === 'true' || cuidadosEspeciais === true);
+
+  try {
+    const resultado = await pool.query(
+      'UPDATE animais SET nome = $1, idade = $2, porte = $3, personalidade = $4, descricao = $5, bomComCriancas = $6, cuidadosEspeciais = $7, emailProtetor = $8, foto = $9 WHERE id = $10 RETURNING *',
+      [nome, idade, porte, personalidadeArray, descricao, bomComCriancasBoolean, cuidadosEspeciaisBoolean, emailProtetor, foto, id]
+    );
+
+    if (resultado.rows.length === 0) {
+      return res.status(404).json({ erro: 'Animal não encontrado' });
+    }
+
+    const animalAtualizado = resultado.rows[0];
+    res.status(200).json({ mensagem: "Animal editado com sucesso!", animal: animalAtualizado });
+  } catch (error) {
+    console.error('Erro ao editar animal:', error);
+    res.status(500).json({ erro: 'Erro ao editar animal' });
   }
-    
-    const bomComCriancasBoolean = (bomComCriancas === 'true' || bomComCriancas === true);
-    const cuidadosEspeciaisBoolean = (cuidadosEspeciais === 'true' || cuidadosEspeciais === true);
-    
-    const foto = req.file ? `/uploads/${req.file.filename}` : animais[index].foto;
+};
 
-    animais[index] = {
-      ...animais[index], // Mantém os dados que existem e atualiza os campos que foram editados
-      nome,
-      idade: parseInt(idade),
-      porte,
-      personalidade: Array.isArray(personalidade) ? personalidade : [personalidade],
-      descricao,
-      bomComCriancas: bomComCriancasBoolean, // Converte para booleano
-      cuidadosEspeciais: cuidadosEspeciaisBoolean, // Converte para booleano
-      emailProtetor,
-      foto
-    };
-
-    res.status(200).json({ mensagem: "Animal editado com sucesso!", animal: animais[index] });
-  } else {
-    res.status(404).json({ erro: "Animal não encontrado" });
-  }
-}
-
-
-module.exports = { listarAnimais, filtrarAnimal, cadastrarAnimal, deletarAnimal, editarAnimal, animais };
+module.exports = { listarAnimais, filtrarAnimal, cadastrarAnimal, deletarAnimal, editarAnimal };

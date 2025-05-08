@@ -116,10 +116,10 @@ function PerfilAnimal() {
                     {/* Resumo Rápido */}
                     <div className='summary'>
                         <div className='summary-item'>
-                            <span>Se dá bem com crianças?</span> {animal.bomComCriancas ? '✅' : '❌'}
+                            <span>Se dá bem com crianças?</span> {animal.bomcomcriancas ? '✅' : '❌'}
                         </div>
                         <div className='summary-item'>
-                            <span>Precisa de cuidados especiais?</span> {animal.cuidadosEspeciais ? '✅' : '❌'}
+                            <span>Precisa de cuidados especiais?</span> {animal.cuidadosespeciais ? '✅' : '❌'}
                         </div>
                     </div>
 
