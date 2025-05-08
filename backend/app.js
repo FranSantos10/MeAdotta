@@ -3,6 +3,8 @@ const cors = require('cors');
 const animalRoutes = require('./routes/animalRoutes');
 const interesseRoutes = require('./routes/interesseRoutes'); 
 const loginRoutes = require('./routes/loginRoutes');
+const localidadeRoutes = require('./routes/localidadeRoutes');
+
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +17,7 @@ app.use('/api/animais', animalRoutes);
 app.use('/api/interesse', interesseRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/login', loginRoutes);
+app.use('/api/estados', localidadeRoutes);
 
 
 app.listen(PORT, () => {

@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS animais (
   cuidadosEspeciais BOOLEAN DEFAULT FALSE,
   foto VARCHAR(255), -- Caminho do upload local
   emailProtetor VARCHAR(100),
+  especie VARCHAR(50),
+  cidade VARCHAR(100),
+  estado VARCHAR(2),
   disponivel BOOLEAN DEFAULT TRUE,
   criado_em TIMESTAMP DEFAULT NOW()
 );
@@ -40,7 +43,6 @@ CREATE TABLE IF NOT EXISTS interesses (
 );
 
 -- Inserção de dados iniciais na tabela "animais"
-
 INSERT INTO animais (
   nome,
   idade,
@@ -50,17 +52,24 @@ INSERT INTO animais (
   bomComCriancas,
   cuidadosEspeciais,
   foto,
-  emailProtetor
+  emailProtetor,
+  especie,
+  cidade,
+  estado
+  
 ) VALUES (
-  'Bella',
-  4,
+  'Bob',
+  1,
   ARRAY['sociável', 'brincalhão'],
-  'Pequeno',
-  'Bella é uma cachorrinha adorável que ama brincar.',
+  'grande',
+  'Bob é um cãozinho adorável que ama brincar.',
   TRUE,
   FALSE,
-  '/uploads/animal.jpg',
-  'franci.santos.silva10@gmail.com'
+  '/uploads/bob.jpg',
+  'franci.santos.silva10@gmail.com',
+  'cão',
+  'Gravataí',
+  'RS'
 );
 
 INSERT INTO animais (
@@ -72,17 +81,23 @@ INSERT INTO animais (
   bomComCriancas,
   cuidadosEspeciais,
   foto,
-  emailProtetor
+  emailProtetor,
+  especie,
+  cidade,
+  estado
 ) VALUES (
-  'Max',
-  6,
-  ARRAY['inteligente', 'sociável', 'carinhoso'],
-  'Médio',
-  'Max é muito leal e adora estar com sua família.',
+  'Garfield',
+  4,
+  ARRAY['sociável', 'carinhoso'],
+  'pequeno',
+  'Garfield é muito leal e adora estar com sua família.',
   TRUE,
   FALSE,
-  '/uploads/animal.jpg',
-  'franci.santos.silva10@gmail.com'
+  '/uploads/garfield.jpg',
+  'franci.santos.silva10@gmail.com',
+  'gato',
+  'Gravataí',
+  'RS'
 );
 
 INSERT INTO animais (
@@ -94,17 +109,23 @@ INSERT INTO animais (
   bomComCriancas,
   cuidadosEspeciais,
   foto,
-  emailProtetor
+  emailProtetor,
+  especie,
+  cidade,
+  estado
 ) VALUES (
   'Ted',
   3,
-  ARRAY['inteligente', 'sociável', 'carinhoso'],
-  'Pequeno',
+  ARRAY['inteligente', 'sociável'],
+  'médio',
   'Ted é um cãozinho muito leal e adora estar com sua família.',
   TRUE,
   FALSE,
-  '/uploads/animal.jpg',
-  'franci.santos.silva10@gmail.com'
+  '/uploads/ted.jpg',
+  'franci.santos.silva10@gmail.com',
+  'cão',
+  'Gravataí',
+  'RS'
 );
 
 INSERT INTO animais (
@@ -116,17 +137,23 @@ INSERT INTO animais (
   bomComCriancas,
   cuidadosEspeciais,
   foto,
-  emailProtetor
+  emailProtetor,  
+  especie,
+  cidade,
+  estado
 ) VALUES (
   'Tom',
   4,
-  ARRAY['calmo', 'dorminhoco', 'carinhoso'],
-  'Pequeno',
+  ARRAY['dorminhoco', 'carinhoso'],
+  'pequeno',
   'Tom adora o conforto de sua caminha e é muito carinhoso.',
   TRUE,
   FALSE,
-  '/uploads/animal.jpg',
-  'franci.santos.silva10@gmail.com'
+  '/uploads/tom.jpg',
+  'franci.santos.silva10@gmail.com',
+  'gato',
+  'Gravataí',
+  'RS'
 );
 
 -- Inserção de dados iniciais na tabela "usuarios" (opcional)

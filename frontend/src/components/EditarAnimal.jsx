@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
-import { PERSONALIDADE_OPCOES } from '../opcoes';
+import { PERSONALIDADE_OPCOES, PORTE_OPCOES, ESPECIE_OPCOES } from '../opcoes';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/styles/CadastroAnimal.css';
 
@@ -10,38 +10,48 @@ const API_URL = import.meta.env.VITE_API_URL;
 function EditarAnimal() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [estados, setEstados] = useState([]);
+  const [cidades, setCidades] = useState([]);
   const [formData, setFormData] = useState({
     nome: '',
     idade: '',
-    porte: 'pequeno',
+    porte: '',
     personalidade: [],
     descricao: '',
     bomComCriancas: '',
     cuidadosEspeciais: '',
     foto: null,  // Foto será tratada separadamente
     emailProtetor: '',
+    especie: '',
+    cidade: '',
+    estado: '',
   });
-  
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [error, setError] = useState('');
 
   useEffect(() => {
+    // Carregar estados e cidades inicialmente
+    axios.get(`${API_URL}/api/estados`)
+      .then(response => setEstados(response.data))
+      .catch(err => console.error('Erro ao carregar estados', err));
+
     // Carregar os dados do animal ao acessar a página de edição
     axios.get(`${API_URL}/api/animais/${id}`)
       .then(response => {
-        console.log("Dados do animal:", response.data); // Verifique os dados retornados
         const animal = response.data;
         setFormData({
           nome: animal.nome,
           idade: animal.idade,
-          porte: animal.porte,
+          porte: animal.porte || 'pequeno',
           personalidade: animal.personalidade || [],  // Certificando-se de que é um array
           descricao: animal.descricao,
           bomComCriancas: animal.bomcomcriancas ? 'true' : 'false',  // Garantir que é 'true' ou 'false'
           cuidadosEspeciais: animal.cuidadosespeciais ? 'true' : 'false', // Garantir que é 'true' ou 'false'
-          foto: animal.foto,  // A foto vai ser exibida como URL, mas não será enviada automaticamente
+          foto: animal.foto,
           emailProtetor: animal.emailprotetor,
+          especie: animal.especie,
+          cidade: animal.cidade,
+          estado: animal.estado,
         });
       })
       .catch(error => {
@@ -49,6 +59,28 @@ function EditarAnimal() {
         setError('Erro ao carregar os dados do animal.');
       });
   }, [id]);
+
+  useEffect(() => {
+    if (formData.estado) {
+      axios.get(`${API_URL}/api/estados/${formData.estado}/municipios`)
+        .then(res => setCidades(res.data))
+        .catch(err => console.error('Erro ao carregar cidades', err));
+    }
+  }, [formData.estado]);
+
+
+  const handleEstadoChange = (e) => {
+    const estadoSelecionado = e.target.value;
+    setFormData((prevData) => ({ ...prevData, estado: estadoSelecionado, cidade: '' }));
+    axios.get(`${API_URL}/api/estados/${estadoSelecionado}/municipios`)
+      .then(response => setCidades(response.data))
+      .catch(err => console.error('Erro ao carregar cidades', err));
+  };
+
+  const handleCidadeChange = (e) => {
+    const cidadeSelecionada = e.target.value;
+    setFormData((prevData) => ({ ...prevData, cidade: cidadeSelecionada }));
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -70,7 +102,7 @@ function EditarAnimal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
-    
+
     // Preencher FormData com os dados do formulário
     Object.keys(formData).forEach((key) => {
       if (key === 'personalidade') {
@@ -131,6 +163,24 @@ function EditarAnimal() {
             </div>
 
             <div className="input-group">
+              <label htmlFor="especie">Espécie:</label>
+              <select
+                id="especie"
+                name="especie"
+                value={formData.especie}
+                onChange={handleChange}
+                required
+                className="select"
+              >
+                {ESPECIE_OPCOES.map((especie) => (
+                  <option key={especie} value={especie}>
+                    {especie.charAt(0).toUpperCase() + especie.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="input-group">
               <label htmlFor="porte">Porte:</label>
               <select
                 id="porte"
@@ -140,9 +190,11 @@ function EditarAnimal() {
                 required
                 className="select"
               >
-                <option value="pequeno">Pequeno</option>
-                <option value="medio">Médio</option>
-                <option value="grande">Grande</option>
+                {PORTE_OPCOES.map((porte) => (
+                  <option key={porte} value={porte}>
+                    {porte.charAt(0).toUpperCase() + porte.slice(1)}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -244,11 +296,45 @@ function EditarAnimal() {
               />
             </div>
 
+            <div className="input-group">
+              <label htmlFor="estado">Estado:</label>
+              <select
+                className="select"
+                id="estado"
+                value={formData.estado}
+                onChange={handleEstadoChange}
+              >
+                <option value="">Selecione um estado</option>
+                {estados.map((estado) => (
+                  <option key={estado.id} value={estado.sigla}>
+                    {estado.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="cidade">Cidade:</label>
+              <select
+                className="select"
+                id="cidade"
+                value={formData.cidade}
+                onChange={handleCidadeChange}
+              >
+                <option value="">Selecione uma cidade</option>
+                {cidades.map((cidade) => (
+                  <option key={cidade.id} value={cidade.nome}>
+                    {cidade.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Mostrar a foto atual */}
-            {formData.foto && (
+            {formData.foto && typeof formData.foto === 'string' && (
               <div className="image-preview">
                 <img
-                  src={`${API_URL}${formData.foto}`} 
+                  src={`${API_URL}${formData.foto}`}
                   alt="Foto do Animal"
                   className="image-preview-small"
                 />

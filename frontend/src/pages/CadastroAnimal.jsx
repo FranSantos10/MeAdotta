@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
-import '../assets/styles/CadastroAnimal.css';
 import axios from 'axios';
-import { PERSONALIDADE_OPCOES } from '../opcoes';
+import { PERSONALIDADE_OPCOES, PORTE_OPCOES, ESPECIE_OPCOES } from '../opcoes';
 import { useNavigate } from 'react-router-dom';
+import '../assets/styles/CadastroAnimal.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function CadastroAnimal() {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const token = localStorage.getItem('tokenProtetor');
-        
-        if (!token) {
-          navigate('/login');
-        }
-      }, []);
-    
-      
+    const [estados, setEstados] = useState([]);
+    const [cidades, setCidades] = useState([]);
     const [formData, setFormData] = useState({
         nome: '',
         idade: '',
@@ -29,10 +21,46 @@ function CadastroAnimal() {
         cuidadosEspeciais: '',
         foto: null,
         emailProtetor: '',
+        especie: '',
+        cidade: '',
+        estado: '',
     });
-
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('tokenProtetor');
+        if (!token) {
+            navigate('/login');
+        }
+        // Carregar a lista de estados
+        axios.get(`${API_URL}/api/estados`)
+            .then(response => {
+                setEstados(response.data);
+            })
+            .catch(error => console.error('Erro ao carregar estados:', error));
+    }, []);
+
+    const handleEstadoChange = (e) => {
+        const estado = e.target.value;
+
+        // Atualiza o valor do estado selecionado em formData
+        setFormData((prevData) => ({ ...prevData, estado: estado }));
+
+        // Carregar as cidades do estado selecionado
+        axios.get(`${API_URL}/api/estados/${estado}/municipios`)
+            .then(response => {
+                setCidades(response.data);
+            })
+            .catch(error => console.error('Erro ao carregar cidades:', error));
+    };
+
+    const handleCidadeChange = (e) => {
+        const cidade = e.target.value;
+
+        // Atualiza o valor da cidade em formData
+        setFormData((prevData) => ({ ...prevData, cidade: cidade }));
+    };
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -115,6 +143,24 @@ function CadastroAnimal() {
                         </div>
 
                         <div className="input-group">
+                            <label htmlFor="especie">Espécie:</label>
+                            <select
+                                id="especie"
+                                name="especie"
+                                value={formData.especie}
+                                onChange={handleChange}
+                                required
+                                className="select"
+                            >
+                                {ESPECIE_OPCOES.map((especie) => (
+                                    <option key={especie} value={especie}>
+                                        {especie.charAt(0).toUpperCase() + especie.slice(1)}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="input-group">
                             <label htmlFor="porte">Porte:</label>
                             <select
                                 id="porte"
@@ -124,9 +170,11 @@ function CadastroAnimal() {
                                 required
                                 className="select"
                             >
-                                <option value="pequeno">Pequeno</option>
-                                <option value="medio">Médio</option>
-                                <option value="grande">Grande</option>
+                                {PORTE_OPCOES.map((porte) => (
+                                    <option key={porte} value={porte}>
+                                        {porte.charAt(0).toUpperCase() + porte.slice(1)}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
@@ -164,7 +212,7 @@ function CadastroAnimal() {
                             <label>Se dá bem com crianças?</label>
                             <div className="radio-group">
                                 <label>
-                                    <input 
+                                    <input
                                         type="radio"
                                         name="bomComCriancas"
                                         value="true"
@@ -175,7 +223,7 @@ function CadastroAnimal() {
                                     Sim
                                 </label>
                                 <label>
-                                    <input 
+                                    <input
                                         type="radio"
                                         name="bomComCriancas"
                                         value="false"
@@ -191,7 +239,7 @@ function CadastroAnimal() {
                             <label>Precisa de cuidados especiais?</label>
                             <div className="radio-group">
                                 <label>
-                                    <input 
+                                    <input
                                         type="radio"
                                         name="cuidadosEspeciais"
                                         value="true"
@@ -202,7 +250,7 @@ function CadastroAnimal() {
                                     Sim
                                 </label>
                                 <label>
-                                    <input 
+                                    <input
                                         type="radio"
                                         name="cuidadosEspeciais"
                                         value="false"
@@ -225,6 +273,36 @@ function CadastroAnimal() {
                                 required
 
                             />
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="estado">Estado:</label>
+                            <select className="select"
+                                id="estado"
+                                value={formData.estado}
+                                onChange={handleEstadoChange}>
+
+                                <option value="">Selecione um estado</option>
+                                {estados.map((estado) => (
+                                    <option key={estado.id} value={estado.sigla}>
+                                        {estado.nome}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <label htmlFor="cidade">Cidade:</label>
+                            <select className="select"
+                                id="cidade"
+                                value={formData.cidade}
+                                onChange={handleCidadeChange}>
+
+                                <option value="">Selecione uma cidade</option>
+                                {cidades.map((cidade) => (
+                                    <option key={cidade.id} value={cidade.nome}>
+                                        {cidade.nome}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="input-group">

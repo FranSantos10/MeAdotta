@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/Filters.css';
-import { PERSONALIDADE_OPCOES } from '../opcoes';
+import { PERSONALIDADE_OPCOES, PORTE_OPCOES } from '../opcoes';
 
 function Filters({ onFilterChange }) {
     const [filtrosSelecionados, setfiltrosSelecionados] = useState({
@@ -32,12 +32,12 @@ function Filters({ onFilterChange }) {
 
     return (
         <div className="filters-container">
-            <h3>Filtros</h3>
+            <h2>Filtros</h2>
 
             <div className="filter-group">
-                <label>Porte:</label>
+                <h3>Porte:</h3>
                 <div className="checkbox-group">
-                    {['pequeno', 'medio', 'grande'].map((tamanho) => (
+                    {PORTE_OPCOES.map((tamanho) => (
                         <label key={tamanho}>
                             <input
                                 type="checkbox"
@@ -51,7 +51,7 @@ function Filters({ onFilterChange }) {
             </div>
 
             <div className="filter-group">
-                <label>Personalidade:</label>
+                <h3>Personalidade:</h3>
                 <div className="checkbox-group">
                     {PERSONALIDADE_OPCOES.map((personalidade) => (
                         <label key={personalidade}>

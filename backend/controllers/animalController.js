@@ -1,3 +1,4 @@
+const e = require('express');
 const pool = require('../db');
 
 // Listar todos os animais
@@ -30,7 +31,6 @@ const filtrarAnimal = async (req, res) => {
   }
 };
 
-
 // Cadastrar um novo animal
 const cadastrarAnimal = async (req, res) => {
   const {
@@ -41,15 +41,19 @@ const cadastrarAnimal = async (req, res) => {
     descricao,
     bomComCriancas,
     cuidadosEspeciais,
-    emailProtetor
+    emailProtetor,
+    especie,
+    cidade,
+    estado
   } = req.body;
 
   const foto = req.file ? `/uploads/${req.file.filename}` : null;
+  const personalidadeArray = Array.isArray(personalidade) ? personalidade : [personalidade];
 
   try {
     const resultado = await pool.query(
-      'INSERT INTO animais (nome, idade, porte, personalidade, descricao, bomComCriancas, cuidadosEspeciais, emailProtetor, foto) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-      [nome, idade, porte, personalidade, descricao, bomComCriancas, cuidadosEspeciais, emailProtetor, foto]
+      'INSERT INTO animais (nome, idade, porte, personalidade, descricao, bomcomcriancas, cuidadosespeciais, emailprotetor, foto, especie,cidade, estado ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
+      [nome, idade, porte, personalidadeArray, descricao, bomComCriancas, cuidadosEspeciais, emailProtetor, foto, especie, cidade, estado]
     );
 
     const novoAnimal = resultado.rows[0];
@@ -89,10 +93,18 @@ const editarAnimal = async (req, res) => {
     descricao,
     bomComCriancas,
     cuidadosEspeciais,
-    emailProtetor
+    emailProtetor,
+    especie,
+    cidade,
+    estado
   } = req.body;
 
   const foto = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // Buscar o animal atual para obter a foto existente, caso não tenha sido atualizada
+  const resultado = await pool.query('SELECT foto FROM animais WHERE id = $1', [id]);
+  const animal = resultado.rows[0];
+  const fotoAtualizada = foto || animal.foto;
 
   const personalidadeArray = Array.isArray(personalidade) ? personalidade : [personalidade];
 
@@ -101,8 +113,8 @@ const editarAnimal = async (req, res) => {
 
   try {
     const resultado = await pool.query(
-      'UPDATE animais SET nome = $1, idade = $2, porte = $3, personalidade = $4, descricao = $5, bomComCriancas = $6, cuidadosEspeciais = $7, emailProtetor = $8, foto = $9 WHERE id = $10 RETURNING *',
-      [nome, idade, porte, personalidadeArray, descricao, bomComCriancasBoolean, cuidadosEspeciaisBoolean, emailProtetor, foto, id]
+      'UPDATE animais SET nome = $1, idade = $2, porte = $3, personalidade = $4, descricao = $5, bomcomcriancas = $6, cuidadosespeciais = $7, emailprotetor = $8, foto = $9, especie = $10, cidade = $11, estado = $12 WHERE id = $13 RETURNING *',
+      [nome, idade, porte, personalidadeArray, descricao, bomComCriancasBoolean, cuidadosEspeciaisBoolean, emailProtetor, fotoAtualizada,especie, cidade, estado, id]
     );
 
     if (resultado.rows.length === 0) {
