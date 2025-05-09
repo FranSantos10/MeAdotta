@@ -4,19 +4,21 @@
     flex-direction: row;
     padding: 2rem;
     gap: 2rem;
-    width: 100%;  /* Garante que ocupe toda a largura da tela */
+    width: 100%;
+    /* Garante que ocupe toda a largura da tela */
 }
 
 /* .filtersAdotar */
-.filtersAdotar {
+/* .filtersAdotar {
     margin-right: 2rem;
-    flex: 1;
-}
+} */
 
 /* .animals-list */
 .animals-list {
     flex: 3;
     gap: 1.5rem;
-    min-width: 0;  /* Evita que a largura mínima da coluna cause quebra */
-    width: 100%;   /* Garante que a lista de animais ocupe toda a largura disponível */
+    min-width: 0;
+    /* Evita que a largura mínima da coluna cause quebra */
+    width: 100%;
+    /* Garante que a lista de animais ocupe toda a largura disponível */
 }

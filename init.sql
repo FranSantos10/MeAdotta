@@ -68,7 +68,7 @@ INSERT INTO animais (
   '/uploads/bob.jpg',
   'franci.santos.silva10@gmail.com',
   'cão',
-  'Gravataí',
+  'Cachoeirinha',
   'RS'
 );
 
@@ -115,12 +115,12 @@ INSERT INTO animais (
   estado
 ) VALUES (
   'Ted',
-  3,
+  7,
   ARRAY['inteligente', 'sociável'],
   'médio',
   'Ted é um cãozinho muito leal e adora estar com sua família.',
   TRUE,
-  FALSE,
+  TRUE,
   '/uploads/ted.jpg',
   'franci.santos.silva10@gmail.com',
   'cão',

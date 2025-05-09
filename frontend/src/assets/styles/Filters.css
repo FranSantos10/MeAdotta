@@ -14,13 +14,18 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  
-  .localizacao-group {
-    display: block;
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 0.5rem;
+/* .input */
+.inputFilter {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+    width: 90%;
+}
+.selectFilter {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+}

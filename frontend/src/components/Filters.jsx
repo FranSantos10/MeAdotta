@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../assets/styles/Filters.css';
-import { PERSONALIDADE_OPCOES, PORTE_OPCOES } from '../opcoes';
+import { PERSONALIDADE_OPCOES, PORTE_OPCOES, ESPECIE_OPCOES } from '../opcoes';
 
 function Filters({ onFilterChange }) {
     const [filtrosSelecionados, setfiltrosSelecionados] = useState({
         porte: [],
         personalidade: [],
+        especie: '',
         localizacao: '',
     });
 
@@ -21,14 +22,14 @@ function Filters({ onFilterChange }) {
         });
     };
 
- /*    const handleLocationChange = (e) => {
-        const location = e.target.value;
-        setfiltrosSelecionados((prevFiltros) => {
-            const novosFiltros = { ...prevFiltros, localizacao: location };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setfiltrosSelecionados((prev) => {
+            const novosFiltros = { ...prev, [name]: value };
             onFilterChange(novosFiltros);
             return novosFiltros;
         });
-    }; */
+    };
 
     return (
         <div className="filters-container">
@@ -65,16 +66,33 @@ function Filters({ onFilterChange }) {
                     ))}
                 </div>
             </div>
-
-          {/*   <div className="filter-group">
-                <label>Localização:</label>
-                <input classesName="localizacao-group"
+            <div className="filter-group">
+                <h3>Espécie:</h3>
+                <select
+                    name="especie"
+                    value={filtrosSelecionados.especie}
+                    onChange={handleInputChange}
+                    className="selectFilter"
+                >
+                    <option value="">Todas</option>
+                    {ESPECIE_OPCOES.map((especie) => (
+                        <option key={especie} value={especie}>
+                            {especie.charAt(0).toUpperCase() + especie.slice(1)}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="filter-group">
+                <h3>Localização:</h3>
+                <input
                     type="text"
+                    name="localizacao"
                     placeholder="Cidade ou Estado"
                     value={filtrosSelecionados.localizacao}
-                    onChange={handleLocationChange}
+                    onChange={handleInputChange}
+                    className="inputFilter"
                 />
-            </div> */}
+            </div>
         </div>
     );
 }
