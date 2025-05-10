@@ -39,5 +39,17 @@ services:
       - "5173:5173"  # Expondo a porta 5173 do frontend
     command: ["npm", "run", "dev"]
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: meadotta_pgadmin
+    restart: always
+    ports:
+      - "8080:80"  # Porta onde o pgAdmin estará acessível
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@meadotta.com"  # E-mail de login para pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: "adminpassword"  # Senha de login para pgAdmin
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
